@@ -1,0 +1,39 @@
+{
+  "name": "dame_n_earl_server",
+  "version": "1.0.0",
+  "description": "This repository will support the API service(s) for DAME and Earl.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dip686/dame_n_earl_server.git"
+  },
+  "keywords": [
+    "dame",
+    "and",
+    "earl",
+    "d&e"
+  ],
+  "author": "Sourav Debnath",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dip686/dame_n_earl_server/issues"
+  },
+  "homepage": "https://github.com/Dip686/dame_n_earl_server#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.0",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "validator": "^13.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
