@@ -1,5 +1,6 @@
 const express = require("express");
 const gravatar = require("gravatar");
+const bcrypt = require("bcryptjs");
 
 const router = express.Router();
 
@@ -27,6 +28,24 @@ router.post("/register", (req, res) => {
         password: req.body.password,
         avatar,
       });
+
+      // Password Encryption
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+          if (err) throw err;
+          newUser.password = hash;
+          newUser
+            .save()
+            .then((user) => res.json({ user }))
+            .catch((err) =>
+              res.status(502).json({
+                db: `Something bad happened with DB operations! ${err}`,
+              })
+            );
+        });
+      });
     }
   });
 });
+
+module.exports = router;

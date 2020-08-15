@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
 const auth = require("./routes/api/auth");
-const profile = require("./routes/api/profile");
 
 const app = express();
 
@@ -25,7 +24,6 @@ app.get("/", (req, res) => res.send(`Hey Base Route!!!`));
 
 // Use Routes
 app.use("/api/v1/auth", auth);
-app.use("/api/v1/profile", profile);
 
 // PORTs
 const PORT = 5000;
