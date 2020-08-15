@@ -1,7 +1,15 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+
+const auth = require("./routes/api/auth");
+const profile = require("./routes/api/profile");
 
 const app = express();
+
+// Middleware: Parse the Request Body
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // DB Configuration
 const db = require("./config/keys").mongoURI;
@@ -12,10 +20,16 @@ mongoose
   .then(() => console.log(`MongoDB Connected!`))
   .catch((err) => console.log(`Uh-Oh! ${err}`));
 
+// Sample Route
 app.get("/", (req, res) => res.send(`Hey Base Route!!!`));
 
-const PORT = 5000;
+// Use Routes
+app.use("/api/v1/auth", auth);
+app.use("/api/v1/profile", profile);
 
+// PORTs
+const PORT = 5000;
 const port = process.env.PORT || PORT;
 
+// Spin Up API Server to PORT number
 app.listen(port, () => console.log(`Server Running On PORT ${port}`));
