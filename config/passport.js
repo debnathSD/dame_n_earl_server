@@ -3,7 +3,7 @@ const JwtStrategy = require("passport-jwt").Strategy,
   ExtractJwt = require("passport-jwt").ExtractJwt;
 
 const mongoose = require("mongoose");
-const User = mongooseoose.model("auth");
+const User = mongoose.model("auth");
 const keys = require("./keys");
 
 const authOptions = {};
