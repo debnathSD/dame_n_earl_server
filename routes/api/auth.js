@@ -3,6 +3,7 @@ const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
+const passport = require("passport");
 
 const router = express.Router();
 
@@ -60,7 +61,7 @@ router.post("/login", (req, res) => {
     password = req.body.password;
 
   // Find a User By Email
-  User.findOne({ email }).then((user) => {
+  Auth.findOne({ email }).then((user) => {
     // Check for user
     if (!user) {
       return res.status(404).json({ email: "User not found!" });
@@ -96,5 +97,23 @@ router.post("/login", (req, res) => {
     });
   });
 });
+
+/**
+ * @route   GET /api/v1/auth/getCurrentUser
+ * @desc    Return Current User - A helper API for Front End
+ * @access  Private
+ */
+router.get(
+  "/getCurrentUser",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json({
+      id: req.user.id,
+      name: req.user.name,
+      email: req.user.email,
+      avatar: req.user.avatar,
+    });
+  }
+);
 
 module.exports = router;
