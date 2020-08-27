@@ -4,16 +4,12 @@ const schema = mongoose.Schema;
 
 // Create Schema
 const UserSchema = new mongoose.Schema({
-  c_id: {
-    type: String,
-    required: true,
-  },
-  c_fname: {
+  name: {
     type: { String: schema.Types.ObjectID, ref: 'Auth' },
     required: true,
   },
   
-  c_email: {
+  email: {
     type: { String: schema.Types.ObjectID, ref: 'Auth' },
     required: true
   },
