@@ -9,6 +9,7 @@ const router = express.Router();
 
 // Load Auth Model
 const Auth = require("../../models/Auth");
+const User = require("../../models/User")
 
 /**
  * @route   POST /api/v1/auth/register
@@ -25,13 +26,14 @@ router.post("/register", (req, res) => {
         r: "pg", // rating to restrict 18+ contents
         d: "mm", // default user icon if 404
       });
-      const newUser = new Auth({
+      const newUser = new ({
         name: req.body.name,
-        email: req.body.email,
+        email: req.body.emaAuthil,
         password: req.body.password,
         avatar,
       });
-
+      
+      
       // Password Encryption
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -49,6 +51,7 @@ router.post("/register", (req, res) => {
       });
     }
   });
+
 });
 
 /**
