@@ -14,25 +14,26 @@ const UserSchema = new mongoose.Schema({
     required: true
   },
   c_addresses: [{
-      c_receiverName:       { type: String },
-      c_receiverContact:    { type: String },
-      c_address:            { type: String },
-      c_city:               { type: String },
-      c_state:              { type: String },
-      c_pin:                { type: Number }
+      receiverName:       { type: String },
+      receiverContact:    { type: String },
+      address:            { type: String },
+      city:               { type: String },
+      state:              { type: String },
+      pin:                { type: Number }
     }],
     
-  c_gender: {
+  gender: {
       type: String
   },
 
-  c_contactno:{
+  contactno:{
     type: Number,
   },
 
-  c_user:{
+  usertype:{
     type: String,
     enum: ["admin", "user"],
+    default: "user",
   }
 });
 

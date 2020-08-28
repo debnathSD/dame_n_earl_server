@@ -14,9 +14,28 @@ const User = require("../../models/User")
  */
 
  router.post("/userdetails", (req,res) => {
-    Auth.findOne({email: req.body.email}).then((user) => {
-        if(user){
-            
+    User.findOne({email: req.body.email}).then((user) => {
+        if (user){ 
+            const updateUser = new({
+                c_addresses: [{
+                    receiverName: req.body.receiverName,
+                    receiverContact: req.body.receiverContact,
+                    address: req.body.address,
+                    city: req.body.city,
+                    state: req.body.state,
+                    pin: req.body.pin
+                }],
+                gender: req.body.gender,
+                contactno: req.body.contactno,
+            });
+
+            updateUser
+                .save()
+                .then((user) => res.json({ user }))
+                .catch((err) => 
+                    res.status(502).json({
+                        db: `Something bad happened with DB operations! ${err}`,
+                }))
         }
         else{
             return res.status(400).json({email: "Please Register/Login!!"})
