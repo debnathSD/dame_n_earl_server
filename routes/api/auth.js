@@ -9,7 +9,7 @@ const router = express.Router();
 
 // Load Auth Model
 const Auth = require("../../models/Auth");
-const User = require("../../models/User")
+const User = require("../../models/User");
 
 /**
  * @route   POST /api/v1/auth/register
@@ -21,19 +21,28 @@ router.post("/register", (req, res) => {
     if (user) {
       return res.status(400).json({ email: "Email already exists!" });
     } else {
+      User.create({ email: req.body.email }, (err) => {
+        if (err) {
+          res.json({
+            error:
+              "Something bad happened while storing record in User Schema!",
+          });
+        }
+      });
+
       const avatar = gravatar.url(req.body.email, {
         s: "200", //size in px
         r: "pg", // rating to restrict 18+ contents
         d: "mm", // default user icon if 404
       });
-      const newUser = new ({
+
+      const newUser = new {
         name: req.body.name,
-        email: req.body.emaAuthil,
+        email: req.body.email,
         password: req.body.password,
         avatar,
-      });
-      
-      
+      }();
+
       // Password Encryption
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -41,7 +50,7 @@ router.post("/register", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then((user) => res.json({ user }))
+            .then((user) => res.json({ isSuccess: "true" }))
             .catch((err) =>
               res.status(502).json({
                 db: `Something bad happened with DB operations! ${err}`,
@@ -51,7 +60,6 @@ router.post("/register", (req, res) => {
       });
     }
   });
-
 });
 
 /**

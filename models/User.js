@@ -1,40 +1,39 @@
 const mongoose = require("mongoose");
-const Auth = require('Auth')
+const Auth = require("Auth");
 const schema = mongoose.Schema;
 
 // Create Schema
 const UserSchema = new mongoose.Schema({
   name: {
-    type: { String: schema.Types.ObjectID, ref: 'Auth' },
-    required: true,
+    type: String,
   },
-  
   email: {
-    type: { String: schema.Types.ObjectID, ref: 'Auth' },
-    required: true
+    type: String,
   },
-  c_addresses: [{
-      receiverName:       { type: String },
-      receiverContact:    { type: String },
-      address:            { type: String },
-      city:               { type: String },
-      state:              { type: String },
-      pin:                { type: Number }
-    }],
-    
+  c_addresses: [
+    {
+      receiverName: { type: String },
+      receiverContact: { type: String },
+      address: { type: String },
+      city: { type: String },
+      state: { type: String },
+      pin: { type: Number },
+    },
+  ],
+
   gender: {
-      type: String
+    type: String,
   },
 
-  contactno:{
+  contactno: {
     type: Number,
   },
 
-  usertype:{
+  usertype: {
     type: String,
     enum: ["admin", "user"],
     default: "user",
-  }
+  },
 });
 
 module.exports = User = mongoose.model("user", UserSchema);
