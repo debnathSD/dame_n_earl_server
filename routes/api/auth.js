@@ -36,12 +36,12 @@ router.post("/register", (req, res) => {
         d: "mm", // default user icon if 404
       });
 
-      const newUser = new {
+      const newUser = new Auth({
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
         avatar,
-      }();
+      });
 
       // Password Encryption
       bcrypt.genSalt(10, (err, salt) => {

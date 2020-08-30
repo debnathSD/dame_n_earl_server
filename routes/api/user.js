@@ -16,7 +16,7 @@ const User = require("../../models/User");
 router.post("/userDetails", (req, res) => {
   User.findOne({ email: req.body.email }).then((user) => {
     if (user) {
-      const updateUser = new {
+      const updateUser = new User({
         c_addresses: [
           {
             receiverName: req.body.receiverName,
@@ -29,18 +29,22 @@ router.post("/userDetails", (req, res) => {
         ],
         gender: req.body.gender,
         contactno: req.body.contactno,
-      }();
+      });
 
       updateUser
         .save()
-        .then((user) => res.json({ user }))
+        .then((user) => res.status(200).json({ isUserDetailsUpdated: "true" }))
         .catch((err) =>
           res.status(502).json({
             db: `Something bad happened with DB operations! ${err}`,
           })
         );
     } else {
-      return res.status(400).json({ email: "Please Register/Login!!" });
+      return res.status(400).json({
+        email: "This Email ID is not present. Please Register/Login!",
+      });
     }
   });
 });
+
+module.exports = router;

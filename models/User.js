@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Auth = require("Auth");
 const schema = mongoose.Schema;
 
 // Create Schema
