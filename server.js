@@ -5,6 +5,7 @@ const passport = require("passport");
 
 const auth = require("./routes/api/auth");
 const user = require("./routes/api/user");
+const address = require("./routes/api/address");
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.get("/", (req, res) => res.send(`Hey Base Route!!!`));
 // Use Routes
 app.use("/api/v1/auth", auth);
 app.use("/api/v1/auth", user);
+app.use("/api/v1/auth", address);
 
 // PORTs
 const PORT = 5000;

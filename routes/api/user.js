@@ -1,10 +1,8 @@
 const express = require("express");
-const keys = require("../../config/keys");
 
 const router = express.Router();
 
-// Load Auth and User Model
-const Auth = require("../../models/Auth");
+// Load User Model
 const User = require("../../models/User");
 
 /**
@@ -13,35 +11,21 @@ const User = require("../../models/User");
  * @access  Public
  */
 
-router.post("/userDetails", (req, res) => {
-  User.findOne({ email: req.body.email }).then((user) => {
-    if (user) {
-      const updateUser = new User({
-        c_addresses: [
-          {
-            receiverName: req.body.receiverName,
-            receiverContact: req.body.receiverContact,
-            address: req.body.address,
-            city: req.body.city,
-            state: req.body.state,
-            pin: req.body.pin,
-          },
-        ],
-        gender: req.body.gender,
-        contactno: req.body.contactno,
-      });
+router.post("/updateUser", (req, res) => {
+  const _gender = req.body.gender;
+  const _contactno = req.body.contactno;
+  const _address = req.body.address;
 
-      updateUser
-        .save()
-        .then((user) => res.status(200).json({ isUserDetailsUpdated: "true" }))
-        .catch((err) =>
-          res.status(502).json({
-            db: `Something bad happened with DB operations! ${err}`,
-          })
-        );
+  User.findOneAndUpdate({ email: req.body.email }, {gender: _gender,
+                                                    contactno: _contactno,
+                                                    $push: {c_addresses: _address}}).then((user) => {
+    if (user) {
+          res.status(200).json({
+            isUpdated: "True"
+          });
     } else {
       return res.status(400).json({
-        email: "This Email ID is not present. Please Register/Login!",
+        email: "User doesn't exist",
       });
     }
   });
