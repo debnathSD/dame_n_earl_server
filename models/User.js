@@ -5,27 +5,31 @@ const schema = mongoose.Schema;
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
+    required: true
   },
   email: {
     type: String,
+    required: true
   },
-  c_addresses: [
+  addresses: [
     {
-      receiverName: { type: String },
-      receiverContact: { type: String },
-      address: { type: String },
-      city: { type: String },
-      state: { type: String },
-      pin: { type: Number },
+      receiverName: { type: String, default: ""},
+      receiverContact: { type: Number, default: 0 },
+      address: { type: String, default: "" },
+      city: { type: String, default: "" },
+      state: { type: String, default: "" },
+      pin: { type: Number, default: 0 },
     },
   ],
 
   gender: {
     type: String,
+    default: " ",
   },
 
   contactno: {
     type: Number,
+    required: true,
   },
 
   usertype: {
