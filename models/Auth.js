@@ -11,6 +11,11 @@ const AuthSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
+  contactno: {
+    type: Number,
+    required: true,
+  },
   password: {
     type: String,
     required: true,
@@ -18,6 +23,7 @@ const AuthSchema = new mongoose.Schema({
   avatar: {
     type: String,
   },
+
   date: {
     type: Date,
     default: Date.now(),

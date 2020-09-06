@@ -21,7 +21,7 @@ router.post("/register", (req, res) => {
     if (user) {
       return res.status(400).json({ email: "Email already exists!" });
     } else {
-      User.create({ email: req.body.email }, (err) => {
+      User.create({ email: req.body.email, name: req.body.name, contactno: req.body.contactno }, (err) => {
         if (err) {
           res.json({
             error:
@@ -39,6 +39,7 @@ router.post("/register", (req, res) => {
       const newUser = new Auth({
         name: req.body.name,
         email: req.body.email,
+        contactno: req.body.contactno,
         password: req.body.password,
         avatar,
       });
@@ -83,12 +84,23 @@ router.post("/login", (req, res) => {
     // The hashed password stored in DB
     bcrypt.compare(password, user.password).then((isMatch) => {
       if (isMatch) {
+        User.findOne({ email }).then((userD) => {
+          // Check for user
+          if (!userD) {
+            console.log("User not found!");
+          }else{
+            console.log("User found");
+          }
         // User Matched, Create JWT Payload
         const payload = {
           id: user.id,
           name: user.name,
+          contactno: user.contactno,
           avatar: user.avatar,
+          userDetails: userD,
         };
+      
+
 
         // Sign The Token with a Signature/ SecretKey
         jwt.sign(
@@ -96,18 +108,21 @@ router.post("/login", (req, res) => {
           keys.secretOrKey,
           { expiresIn: 3600 }, // Expire the JWT in an hour and Logout the User
           (err, token) => {
-            res.json({
-              success: true,
-              token: `Bearer ${token}`, // Use Conventional Bearer Protocol to Pass the Token
-            });
-          }
+                res.json({
+                  success: true,
+                  token: `Bearer ${token}`, // Use Conventional Bearer Protocol to Pass the Token
+                });
+              }
+
         );
-      } else {
+      });
+    } else {
         return res.status(400).json({ password: "Password incorrect!" });
       }
     });
   });
 });
+
 
 /**
  * @route   GET /api/v1/auth/getCurrentUser
