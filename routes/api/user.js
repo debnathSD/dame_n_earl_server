@@ -6,7 +6,7 @@ const router = express.Router();
 const User = require("../../models/User");
 
 /**
- * @route   POST /api/v1/auth/userDetails
+ * @route   POST /api/v1/auth/updateUser
  * @desc    Update the user details
  * @access  Public
  */
@@ -30,5 +30,28 @@ router.post("/updateUser", (req, res) => {
     }
   });
 });
+
+
+
+/**
+ * @route   GET /api/v1/auth/getUserDetails
+ * @desc    Get the user details
+ * @access  Public
+ */
+
+ router.get("/getUserDetails", (req, res) => {
+  const email = req.body.email;
+
+// Find a User By Email
+User.findOne({ email }).then((user) => {
+  // Check for user
+  if (!user) {
+    return res.status(404).json({ email: "User not found!" });
+  }else{
+    return res.send(user);
+  }
+
+ });
+ });
 
 module.exports = router;

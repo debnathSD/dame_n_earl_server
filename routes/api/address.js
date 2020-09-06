@@ -28,7 +28,7 @@ const User = require("../../models/User");
   });
 
 /**
- * @route   GET /api/v1/auth/addAddress
+ * @route   GET /api/v1/auth/delAddress
  * @desc    Adds new address to address list
  * @access  Public
  */
