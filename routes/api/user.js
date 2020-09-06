@@ -14,11 +14,11 @@ const User = require("../../models/User");
 router.post("/updateUser", (req, res) => {
   const _gender = req.body.gender;
   const _contactno = req.body.contactno;
-  const _address = req.body.address;
+  const _addresses = req.body.addresses;
 
   User.findOneAndUpdate({ email: req.body.email }, {gender: _gender,
                                                     contactno: _contactno,
-                                                    $set: {addresses: _address},
+                                                    $set: {addresses: _addresses},
                                                     
                                                   }).then((user) => {
     if (user) {
