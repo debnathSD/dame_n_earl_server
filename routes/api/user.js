@@ -18,7 +18,9 @@ router.post("/updateUser", (req, res) => {
 
   User.findOneAndUpdate({ email: req.body.email }, {gender: _gender,
                                                     contactno: _contactno,
-                                                    $push: {c_addresses: _address}}).then((user) => {
+                                                    $set: {c_addresses: _address},
+                                                    
+                                                  }).then((user) => {
     if (user) {
           res.status(200).json({
             isUpdated: "True"
@@ -34,7 +36,7 @@ router.post("/updateUser", (req, res) => {
 
 
 /**
- * @route   GET /api/v1/auth/getUserDetails
+ * @route   GET /api/v1/auth/getUser
  * @desc    Get the user details
  * @access  Public
  */

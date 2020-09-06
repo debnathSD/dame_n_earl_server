@@ -44,6 +44,10 @@ router.post("/register", (req, res) => {
         avatar,
       });
 
+      
+      
+      
+
       // Password Encryption
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -51,7 +55,23 @@ router.post("/register", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then((user) => res.json({ isSuccess: "true" }))
+            .then((user) => {
+              const payload = newUser;
+              // Sign The Token with a Signature/ SecretKey
+              jwt.sign(
+                payload,
+                keys.secretOrKey,
+                { expiresIn: 3600 }, // Expire the JWT in an hour and Logout the User
+                (err, token) => {
+                      res.json({
+                        success: true,
+                        token: `Bearer ${token}`, // Use Conventional Bearer Protocol to Pass the Token
+                      });
+                    }
+        
+              );
+              
+            })
             .catch((err) =>
               res.status(502).json({
                 db: `Something bad happened with DB operations! ${err}`,
@@ -84,13 +104,22 @@ router.post("/login", (req, res) => {
     // The hashed password stored in DB
     bcrypt.compare(password, user.password).then((isMatch) => {
       if (isMatch) {
+        User.findOne({ email }).then((userD) => {
+          // Check for user
+          if (!userD) {
+            console.log("User not found!");
+          }else{
+            console.log("User found");
+          }
         // User Matched, Create JWT Payload
         const payload = {
           id: user.id,
           name: user.name,
           contactno: user.contactno,
           avatar: user.avatar,
+          userDetails: userD,
         };
+      
 
 
         // Sign The Token with a Signature/ SecretKey
@@ -99,28 +128,21 @@ router.post("/login", (req, res) => {
           keys.secretOrKey,
           { expiresIn: 3600 }, // Expire the JWT in an hour and Logout the User
           (err, token) => {
-            User.findOne({ email }).then((userD) => {
-              // Check for user
-              if (!userD) {
-                console.log("User not found!");
-              }else{
-                console.log("User found");
                 res.json({
-                  userDetails: userD,
                   success: true,
                   token: `Bearer ${token}`, // Use Conventional Bearer Protocol to Pass the Token
                 });
               }
-            });
-            
-          }
+
         );
-      } else {
+      });
+    } else {
         return res.status(400).json({ password: "Password incorrect!" });
       }
     });
   });
 });
+
 
 /**
  * @route   GET /api/v1/auth/getCurrentUser
