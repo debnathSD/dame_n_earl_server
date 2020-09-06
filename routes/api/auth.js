@@ -44,10 +44,6 @@ router.post("/register", (req, res) => {
         avatar,
       });
 
-      
-      
-      
-
       // Password Encryption
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -55,23 +51,7 @@ router.post("/register", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then((user) => {
-              const payload = newUser;
-              // Sign The Token with a Signature/ SecretKey
-              jwt.sign(
-                payload,
-                keys.secretOrKey,
-                { expiresIn: 3600 }, // Expire the JWT in an hour and Logout the User
-                (err, token) => {
-                      res.json({
-                        success: true,
-                        token: `Bearer ${token}`, // Use Conventional Bearer Protocol to Pass the Token
-                      });
-                    }
-        
-              );
-              
-            })
+            .then((user) => res.json({ isSuccess: "true" }))
             .catch((err) =>
               res.status(502).json({
                 db: `Something bad happened with DB operations! ${err}`,

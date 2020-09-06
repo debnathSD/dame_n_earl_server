@@ -14,7 +14,7 @@ const User = require("../../models/User");
  router.post("/addAddress", (req,res) => {
     const _address = req.body.address; 
 
-    User.findOneAndUpdate({ email: req.body.email }, {"$push": { "c_addresses": _address }} ).then((user) => {
+    User.findOneAndUpdate({ email: req.body.email }, {"$push": { "addresses": _address }} ).then((user) => {
       if (user) {
             res.status(200).json({
               isUpdated: "True"
@@ -35,7 +35,7 @@ const User = require("../../models/User");
 
  router.post("/delAddress", (req,res) => {
    const id = req.body.id;
-   User.updateOne({ email: req.body.email }, {"$pull": { c_addresses: {"_id": id} }} ).then((user) => {
+   User.updateOne({ email: req.body.email }, {"$pull": { addresses: {"_id": id} }} ).then((user) => {
     if (user) {
           res.status(200).json({
             addressDeleted: "True"

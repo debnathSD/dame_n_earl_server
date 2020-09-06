@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  c_addresses: [
+  addresses: [
     {
       receiverName: { type: String, default: ""},
       receiverContact: { type: Number, default: 0 },
@@ -29,7 +29,7 @@ const UserSchema = new mongoose.Schema({
 
   contactno: {
     type: Number,
-    default: 00000,
+    required: true,
   },
 
   usertype: {

@@ -14,9 +14,9 @@ const User = require("../../models/Product");
 router.get("/getProductsDetails", (req, res) => {
     
   
-  // Find a User By Email
+  // Get all the products
   Product.find({ }).then((product) => {
-    // Check for user
+    // Check for products
     if (!product) {
       return res.status(404).json({ email: "User not found!" });
     }else{

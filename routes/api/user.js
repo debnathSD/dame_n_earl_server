@@ -18,7 +18,7 @@ router.post("/updateUser", (req, res) => {
 
   User.findOneAndUpdate({ email: req.body.email }, {gender: _gender,
                                                     contactno: _contactno,
-                                                    $set: {c_addresses: _address},
+                                                    $set: {addresses: _address},
                                                     
                                                   }).then((user) => {
     if (user) {
