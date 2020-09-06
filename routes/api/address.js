@@ -6,7 +6,7 @@ const router = express.Router();
 const User = require("../../models/User");
 
 /**
- * @route   POST /api/v1/auth/addAddress
+ * @route   POST /api/v1/user/addAddress
  * @desc    Adds new address to address list
  * @access  Public
  */
@@ -28,7 +28,7 @@ const User = require("../../models/User");
   });
 
 /**
- * @route   GET /api/v1/auth/delAddress
+ * @route   POST /api/v1/user/delAddress
  * @desc    Adds new address to address list
  * @access  Public
  */
