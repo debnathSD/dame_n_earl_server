@@ -7,6 +7,7 @@ const auth = require("./routes/api/auth");
 const user = require("./routes/api/user");
 const address = require("./routes/api/address");
 const product = require("./routes/api/product");
+const cart = require("./routes/api/cart");
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use("/api/v1/auth", auth);
 app.use("/api/v1/auth", user);
 app.use("/api/v1/user", address);
 app.use("/api/v1/products", product);
+app.use("/api/v1/cart", cart);
 
 // PORTs
 const PORT = 5000;

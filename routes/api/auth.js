@@ -10,6 +10,7 @@ const router = express.Router();
 // Load Auth Model
 const Auth = require("../../models/Auth");
 const User = require("../../models/User");
+const Cart = require("../../models/Cart");
 
 /**
  * @route   POST /api/v1/auth/register
@@ -29,6 +30,15 @@ router.post("/register", (req, res) => {
           });
         }
       });
+      Cart.create({ email: req.body.email }, (err) => {
+        if (err) {
+          res.json({
+            error:
+              "Something bad happened while email-id to Cart Schema!",
+          });
+        }
+      });
+
 
       const avatar = gravatar.url(req.body.email, {
         s: "200", //size in px
