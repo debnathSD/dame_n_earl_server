@@ -47,6 +47,50 @@ router.get("/getProductsDetails/Earrings", (req, res) => {
    });
    });
 
+   /**
+ * @route   GET /api/v1/products/getProductsDetails/Nosepins
+ * @desc    Get all Nosepins Details
+ * @access  Public
+ */
+
+router.get("/getProductsDetails/Nosepins", (req, res) => {
+    
+  //const _category = req.body.category;
+  // Get all the products
+  Product.find({ category: "Nosepins" }).then((category) => {
+    // Check if category exists
+    if (!category) {
+      return res.status(404).json({ category: "Category not found!" });
+    }else{
+      return res.json(category);
+    }
+  
+   });
+   });
+
+   /**
+ * @route   GET /api/v1/products/getProductsDetails/headAccessories
+ * @desc    Get all headAccessories Details
+ * @access  Public
+ */
+
+router.get("/getProductsDetails/headAccessories", (req, res) => {
+    
+  //const _category = req.body.category;
+  // Get all the products
+  Product.find({ category: "headAccessories" }).then((category) => {
+    // Check if category exists
+    if (!category) {
+      return res.status(404).json({ category: "Category not found!" });
+    }else{
+      return res.json(category);
+    }
+  
+   });
+   });
+
+
+
   
 /**
  * @route   POST /api/v1/products/addProducts
