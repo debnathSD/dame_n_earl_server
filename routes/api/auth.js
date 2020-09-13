@@ -21,14 +21,21 @@ router.post("/register", (req, res) => {
     if (user) {
       return res.status(400).json({ email: "Email already exists!" });
     } else {
-      User.create({ email: req.body.email, name: req.body.name, contactno: req.body.contactno }, (err) => {
-        if (err) {
-          res.json({
-            error:
-              "Something bad happened while storing record in User Schema!",
-          });
+      User.create(
+        {
+          email: req.body.email,
+          name: req.body.name,
+          contactno: req.body.contactno,
+        },
+        (err) => {
+          if (err) {
+            res.json({
+              error:
+                "Something bad happened while storing record in User Schema!",
+            });
+          }
         }
-      });
+      );
 
       const avatar = gravatar.url(req.body.email, {
         s: "200", //size in px
@@ -70,7 +77,8 @@ router.post("/register", (req, res) => {
  */
 router.post("/login", (req, res) => {
   const email = req.body.email,
-    password = req.body.password;
+    password = jwt.decode(req.body.password);
+  // console.log(`Decoded password: ${password}`);
 
   // Find a User By Email
   Auth.findOne({ email }).then((user) => {
@@ -88,41 +96,37 @@ router.post("/login", (req, res) => {
           // Check for user
           if (!userD) {
             console.log("User not found!");
-          }else{
+          } else {
             console.log("User found");
           }
-        // User Matched, Create JWT Payload
-        const payload = {
-          id: user.id,
-          name: user.name,
-          contactno: user.contactno,
-          avatar: user.avatar,
-          userDetails: userD,
-        };
-      
+          // User Matched, Create JWT Payload
+          const payload = {
+            id: user.id,
+            name: user.name,
+            contactno: user.contactno,
+            avatar: user.avatar,
+            userDetails: userD,
+          };
 
-
-        // Sign The Token with a Signature/ SecretKey
-        jwt.sign(
-          payload,
-          keys.secretOrKey,
-          { expiresIn: 3600 }, // Expire the JWT in an hour and Logout the User
-          (err, token) => {
-                res.json({
-                  success: true,
-                  token: `Bearer ${token}`, // Use Conventional Bearer Protocol to Pass the Token
-                });
-              }
-
-        );
-      });
-    } else {
+          // Sign The Token with a Signature/ SecretKey
+          jwt.sign(
+            payload,
+            keys.secretOrKey,
+            { expiresIn: 3600 }, // Expire the JWT in an hour and Logout the User
+            (err, token) => {
+              res.json({
+                success: true,
+                token: `Bearer ${token}`, // Use Conventional Bearer Protocol to Pass the Token
+              });
+            }
+          );
+        });
+      } else {
         return res.status(400).json({ password: "Password incorrect!" });
       }
     });
   });
 });
-
 
 /**
  * @route   GET /api/v1/auth/getCurrentUser
