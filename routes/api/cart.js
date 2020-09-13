@@ -42,13 +42,15 @@ router.get("/getCartDetails", (req, res) => {
       cart.products.forEach((el, idx) => {
         Product.findOne({ "items.p_id": el.p_id }).then((cartItem) => {
           if (!cartItem) {
-            res.status(404).json({ cart: "There is no matching item!" });
+            res.status(404).json({ cartDetails: "There is no matching item!" });
             reject();
           } else {
-            const result = cartItem.items.filter((i) => {
-              return i.p_id === el.p_id;
-            });
-            products.push(result);
+            for (let k = 0; k < cartItem.items.length; k++) {
+              if (el.p_id === cartItem.items[k].p_id) {
+                products.push(cartItem.items[k]);
+                break;
+              }
+            }
             if (idx === cart.products.length - 1) resolve(products); // Track loop completion status
           }
         });
