@@ -3,20 +3,20 @@ const schema = mongoose.Schema;
 
 // Create Schema
 const CartSchema = new mongoose.Schema({
-    email: {
+  email: {
+    type: String,
+    required: true,
+  },
+  products: [
+    {
+      p_id: {
         type: String,
-        required: true
+      },
+      quantity: {
+        type: Number,
+      },
     },
-    products: [{
-        p_id: {
-            type: String,
-        },
-        quantity: {
-            type: Number,
-
-        }
-    }]
-
+  ],
 });
 
 module.exports = Cart = mongoose.model("cart", CartSchema);
