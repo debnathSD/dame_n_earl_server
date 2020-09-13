@@ -6,36 +6,44 @@ const router = express.Router();
 const User = require("../../models/Product");
 
 /**
- * @route   GET /api/v1/auth/getProductsDetails
- * @desc    Get Products Details
+ * @route   GET /api/v1/products/getProductsDetails/:attureType
+ * @param {attireType} The Product
+ * @desc    Get Products Detailsz
  * @access  Public
  */
-
-router.get("/getProductsDetails", (req, res) => {
-    
-  
+router.get("/getProductsDetails/:attireType", (req, res) => {
+  const _category = req.params.attireType;
   // Get all the products
-  Product.find({ }).then((product) => {
-    // Check for products
-    if (!product) {
-      return res.status(404).json({ email: "User not found!" });
-    }else{
-      return res.send(product);
+  Product.find({ category: _category }).then((category) => {
+    // Check if category exists
+    if (!category) {
+      return res.status(404).json({ attireDetails: "Category not found!" });
+    } else {
+      return res.status(200).json({ attireDetails: category });
     }
-  
-   });
-   });
-  
+  });
+});
+
 /**
- * @route   GET /api/v1/auth/addProduct
+ * @route   POST /api/v1/products/addProducts
  * @desc    Get Products Details
  * @access  Public
  */
 
-router.get("/addProduct", (req, res) => {
-    _product: req.body.product;
-    Product.create({});
-     });
-    
+router.post("/addProducts", (req, res) => {
+  const _category = req.body.category;
+  const _items = req.body.items;
+  Product.create({ category: _category, items: _items }, (err) => {
+    if (err) {
+      console.log(err);
+      res.json({
+        error:
+          "Something bad happened while storing products in Product Schema!",
+      });
+    } else {
+      res.json({ isProductsAdded: "true" });
+    }
+  });
+});
 
-  module.exports = router;
+module.exports = router;
