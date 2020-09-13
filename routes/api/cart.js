@@ -37,7 +37,6 @@ router.put("/addToCart", (req, res) => {
  */
 router.get("/getCartDetails", (req, res) => {
   Cart.findOne({ email: req.body.email }).then((cart) => {
-    console.log(cart);
     let products = [];
     const completionStatus = new Promise((resolve, reject) => {
       cart.products.forEach((el, idx) => {

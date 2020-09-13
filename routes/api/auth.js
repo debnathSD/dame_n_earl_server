@@ -55,7 +55,7 @@ router.post("/register", (req, res) => {
         name: req.body.name,
         email: req.body.email,
         contactno: req.body.contactno,
-        password: req.body.password,
+        password: jwt.decode(req.body.password),
         avatar,
       });
 
