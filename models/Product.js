@@ -18,7 +18,7 @@ const ProductSchema = new mongoose.Schema({
       stock: { type: Number, required: true },
       maxQuantity: { type: Number, required: true },
       rating: { type: Number, default: 0 },
-      currency: { type: String, default: "" },
+      currency: { type: String, default: "₹" },
       description: {
         weight: { type: String, default: "" },
         productDetails: { type: String, required: true },
