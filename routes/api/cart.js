@@ -47,7 +47,10 @@ router.get("/getCartDetails", (req, res) => {
           } else {
             for (let k = 0; k < cartItem.items.length; k++) {
               if (el.p_id === cartItem.items[k].p_id) {
-                products.push(cartItem.items[k]);
+                products.push({
+                  items: cartItem.items[k],
+                  quantity: el.quantity,
+                });
                 break;
               }
             }
