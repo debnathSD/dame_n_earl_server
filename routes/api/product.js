@@ -34,12 +34,13 @@ router.get("/getSpecificProduct/:pid", (req, res) => {
   const _id = req.params.pid;
   console.log("Product id", _id);
   // Get all the products
-  Product.find({ "items": { p_id: _id } }).then((product) => {
+  Product.find({ "items" : {p_id: _id }}).then((product) => {
     // Check if category exists
     if (!product) {
       return res.status(404).json({ productDetails: "No such product Found" });
     } else {
       //const spProduct = product.items.filter((res) => res.p_id === _id);
+      console.log("Product Details", product);
       return res.status(200).json({ productDetails: product });
     }
   });
