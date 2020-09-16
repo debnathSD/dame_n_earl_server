@@ -8,7 +8,7 @@ const User = require("../../models/Product");
 /**
  * @route   GET /api/v1/products/getProductsDetails/:attureType
  * @param {attireType} The Product
- * @desc    Get Products Detailsz
+ * @desc    Get Products Details
  * @access  Public
  */
 router.get("/getProductsDetails/:attireType", (req, res) => {
@@ -20,6 +20,27 @@ router.get("/getProductsDetails/:attireType", (req, res) => {
       return res.status(404).json({ attireDetails: "Category not found!" });
     } else {
       return res.status(200).json({ attireDetails: category });
+    }
+  });
+});
+
+/**
+ * @route   GET /api/v1/products/getSpecificProduct/:pid
+ * @param {pid} The Product
+ * @desc    Get Product Details using Product ID
+ * @access  Public
+ */
+router.get("/getSpecificProduct/:pid", (req, res) => {
+  const _id = req.params.pid;
+  console.log("Product id", _id);
+  // Get all the products
+  Product.find({ "items": { p_id: _id } }).then((product) => {
+    // Check if category exists
+    if (!product) {
+      return res.status(404).json({ productDetails: "No such product Found" });
+    } else {
+      //const spProduct = product.items.filter((res) => res.p_id === _id);
+      return res.status(200).json({ productDetails: product });
     }
   });
 });

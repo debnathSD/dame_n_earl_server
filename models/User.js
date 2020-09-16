@@ -5,20 +5,21 @@ const schema = mongoose.Schema;
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
-    required: true
+    required: true,
   },
   addresses: [
     {
-      receiverName: { type: String, default: ""},
+      receiverName: { type: String, default: "" },
       receiverContact: { type: Number, default: 0 },
       address: { type: String, default: "" },
       city: { type: String, default: "" },
       state: { type: String, default: "" },
       pin: { type: Number, default: 0 },
+      country: { type: String },
     },
   ],
 

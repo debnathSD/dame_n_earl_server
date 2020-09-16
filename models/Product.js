@@ -23,7 +23,7 @@ const ProductSchema = new mongoose.Schema({
         weight: { type: String, default: "" },
         productDetails: { type: String, required: true },
         material: { type: String, required: true },
-
+        size: { type: String, default: "" },
         care: { type: String, default: "" },
 
         stylenote: { type: String, default: "" },
