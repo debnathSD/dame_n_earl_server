@@ -4,7 +4,6 @@ const router = express.Router();
 
 // Load User Model
 const Cart = require("../../models/Cart");
-const User = require("../../models/User");
 const Product = require("../../models/Product");
 
 /**
