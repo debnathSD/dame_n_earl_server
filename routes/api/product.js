@@ -6,7 +6,7 @@ const router = express.Router();
 const User = require("../../models/Product");
 
 /**
- * @route   GET /api/v1/products/getProductsDetails/:attureType
+ * @route   GET /api/v1/products/getProductsDetails/:attireType
  * @param {attireType} The Product
  * @desc    Get Products Details
  * @access  Public
@@ -32,7 +32,6 @@ router.get("/getProductsDetails/:attireType", (req, res) => {
  */
 router.get("/getSpecificProduct/:pid", (req, res) => {
   const _id = req.params.pid;
-  console.log("Product id", _id);
   // Get all the products
   Product.find({ items: { $elemMatch: { p_id: _id } } }).then((product) => {
     // Check if category exists
@@ -40,7 +39,6 @@ router.get("/getSpecificProduct/:pid", (req, res) => {
       return res.status(404).json({ productDetails: "No such product Found" });
     } else {
       //const spProduct = product.items.filter((res) => res.p_id === _id);
-      console.log("Product Details", product);
       return res.status(200).json({ productDetails: product });
     }
   });
