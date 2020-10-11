@@ -40,6 +40,9 @@ const OrderSchema = new mongoose.Schema({
   tax: {
     type: Number,
   },
+  shippingCharges: {
+    type: Number,
+  },
   status: {
     type: String,
   },

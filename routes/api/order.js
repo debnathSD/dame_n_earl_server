@@ -7,15 +7,16 @@ const Order = require("../../models/Order");
 
 /**
  * @route   GET /api/v1/order/getOrderDetails
- * @desc    Get Oder Details
+ * @desc    Get Order Details
  * @access  Public
  */
 
 router.get("/getOrderDetails", (req, res) => {
-  const _id = req.body.shiprocketOrderId;
+  const email = req.body.userEmail;
   // Get order details
-  Order.findOne({ shiprocketOrderId: _id }).then((order) => {
+  Order.find({ userEmail: email }).then((order) => {
     if (order) {
+      console.log("Orders for the user ", order);
       res.status(200).json({ orderDetails: order });
     } else {
       res.status(404).json({ orderDetails: "Order Not Found" });
@@ -29,9 +30,11 @@ router.get("/getOrderDetails", (req, res) => {
  * @access  Public
  */
 
-router.get("/createOrder", (req, res) => {
-  const _id = req.body.shiprocketOrderId;
+router.post("/createOrder", (req, res) => {
+  //const _id = req.body.shiprocketOrderId;
+
   // Create Order
+  console.log("Creating Order..");
   Order.create(
     {
       orderId: req.body.orderId,
@@ -43,6 +46,7 @@ router.get("/createOrder", (req, res) => {
       paymentStatus: req.body.paymentStatus,
       totalAmt: req.body.totalAmt,
       totalSavings: req.body.totalSavings,
+      shippingCharges: req.body.shippingCharges,
       tax: req.body.tax,
       status: req.body.status,
       products: req.body.products,
